@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tool Enchantment — Pastel Automation Suite</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', 'Segoe UI', sans-serif;
+      background: #fdf6ff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      padding-bottom: 3rem;
+    }
+
+    #mgBg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      animation: bubbleFloat ease-in-out infinite;
+    }
+
+    @keyframes bubbleFloat {
+      0%   { transform: translateY(0) scale(1); opacity: 0; }
+      15%  { opacity: 0.6; }
+      80%  { opacity: 0.3; }
+      100% { transform: translateY(-110vh) scale(0.6); opacity: 0; }
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 13px;
+      animation: sparkleTwinkle ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sparkleTwinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+      40%, 60%  { opacity: 1; transform: scale(1.2) rotate(20deg); }
+    }
+
+    .floating-hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .fheart {
+      position: absolute;
+      font-size: 11px;
+      animation: heartFloat ease-in-out infinite;
+      opacity: 0;
+    }
+
+    @keyframes heartFloat {
+      0%   { transform: translateY(0) scale(0.8); opacity: 0; }
+      20%  { opacity: 0.7; }
+      80%  { opacity: 0.4; }
+      100% { transform: translateY(-90px) scale(1.1); opacity: 0; }
+    }
+
+    .mg-header {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2.5rem 1rem 1.5rem;
+    }
+
+    .wand-icon {
+      font-size: 2.4rem;
+      animation: wandWave 3s ease-in-out infinite;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes wandWave {
+      0%, 100% { transform: rotate(-10deg) scale(1); }
+      25%       { transform: rotate(10deg) scale(1.1); }
+      50%       { transform: rotate(-5deg) scale(1); }
+      75%       { transform: rotate(8deg) scale(1.05); }
+    }
+
+    .mg-crown {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #fde8f5, #ede8fd);
+      border: 1px solid rgba(210,153,230,0.4);
+      border-radius: 20px;
+      padding: 4px 18px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #a855b0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      animation: crownGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes crownGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(210,153,230,0); }
+      50%       { box-shadow: 0 0 16px 4px rgba(210,153,230,0.3); }
+    }
+
+    .mg-title {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 0.25rem;
+      animation: titleRainbow 5s ease-in-out infinite;
+    }
+
+    @keyframes titleRainbow {
+      0%, 100% { color: #c026a8; }
+      33%       { color: #7c3aed; }
+      66%       { color: #db2777; }
+    }
+
+    .mg-sub {
+      font-size: 14px;
+      color: #b085c0;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .jp-text {
+      display: block;
+      font-size: 11px;
+      color: #d4a5e8;
+      letter-spacing: 3px;
+      margin-top: 5px;
+    }
+
+    .ribbon-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 1rem auto 1.75rem;
+      max-width: 420px;
+      padding: 0 1rem;
+    }
+
+    .ribbon-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(192,120,218,0.4), transparent);
+    }
+
+    .ribbon-heart {
+      font-size: 14px;
+      color: #e879b0;
+      animation: heartBeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.25); }
+    }
+
+    .tools-grid {
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      padding: 0 1.5rem;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .tool-card {
+      position: relative;
+      background: #fff;
+      border: 1.5px solid rgba(220,170,240,0.5);
+      border-radius: 20px;
+      padding: 1.3rem 1rem 1.15rem;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s, border-color 0.2s;
+      text-decoration: none;
+      display: block;
+      animation: cardFloatIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
+    }
+
+    .tool-card:nth-child(1)  { animation-delay: 0.05s; }
+    .tool-card:nth-child(2)  { animation-delay: 0.10s; }
+    .tool-card:nth-child(3)  { animation-delay: 0.15s; }
+    .tool-card:nth-child(4)  { animation-delay: 0.20s; }
+    .tool-card:nth-child(5)  { animation-delay: 0.25s; }
+    .tool-card:nth-child(6)  { animation-delay: 0.30s; }
+    .tool-card:nth-child(7)  { animation-delay: 0.35s; }
+    .tool-card:nth-child(8)  { animation-delay: 0.40s; }
+    .tool-card:nth-child(9)  { animation-delay: 0.45s; }
+    .tool-card:nth-child(10) { animation-delay: 0.50s; }
+
+    @keyframes cardFloatIn {
+      from { transform: translateY(24px) scale(0.92); opacity: 0; }
+      to   { transform: translateY(0)    scale(1);    opacity: 1; }
+    }
+
+    .tool-card:hover {
+      transform: translateY(-7px) scale(1.03);
+      box-shadow: 0 12px 32px rgba(200,130,230,0.22);
+      border-color: rgba(196,90,210,0.55);
+    }
+
+    .card-sparkle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 13px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tool-card:hover .card-sparkle {
+      opacity: 1;
+      animation: cardSparkleAnim 0.8s ease-in-out infinite;
+    }
+
+    @keyframes cardSparkleAnim {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50%       { transform: scale(1.3) rotate(15deg); }
+    }
+
+    .card-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.85rem;
+      font-size: 22px;
+      position: relative;
+      z-index: 2;
+      transition: transform 0.35s cubic-bezier(.34,1.56,.64,1);
+      border: 1.5px solid rgba(255,255,255,0.7);
+    }
+
+    .tool-card:hover .card-icon-wrap {
+      transform: rotate(-8deg) scale(1.15);
+    }
+
+    .card-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: #6b21a8;
+      margin-bottom: 3px;
+      position: relative;
+      z-index: 2;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 11.5px;
+      color: #b094c4;
+      position: relative;
+      z-index: 2;
+      font-weight: 600;
+    }
+
+    .card-badge {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 10px;
+      opacity: 0;
+      transition: opacity 0.25s;
+      z-index: 2;
+    }
+
+    .tool-card:hover .card-badge { opacity: 1; }
+
+    .dots-deco {
+      position: absolute;
+      bottom: 9px;
+      left: 13px;
+      display: flex;
+      gap: 3px;
+      z-index: 2;
+    }
+
+    .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      opacity: 0.35;
+    }
+
+    .mg-footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      margin-top: 2.25rem;
+    }
+
+    .footer-pills {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-note {
+      font-size: 11px;
+      color: #d4a5e8;
+      margin-top: 10px;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 480px) {
+      .mg-title { font-size: 1.7rem; }
+      .tools-grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="mgBg"></div>
+  <div class="floating-hearts" id="hearts"></div>
+
+  <header class="mg-header">
+    <div class="wand-icon">✨</div>
+    <div class="mg-crown">
+      <span>pastel</span>
+      <span style="color:#e879b0;">★</span>
+      <span>automation suite</span>
+    </div>
+    <h1 class="mg-title">Tool Enchantment</h1>
+    <p class="mg-sub">Choose your tool &amp; launch instantly</p>
+    <span class="jp-text">自動化ツール · パステル · スイート</span>
+  </header>
+
+  <div class="ribbon-divider">
+    <div class="ribbon-line"></div>
+    <div class="ribbon-heart">♥</div>
+    <div class="ribbon-line"></div>
+    <div class="ribbon-heart">✦</div>
+    <div class="ribbon-line"></div>
+    <div class="ribbon-heart">♥</div>
+    <div class="ribbon-line"></div>
+  </div>
+
+  <main class="tools-grid" id="toolsGrid"></main>
+
+  <footer class="mg-footer">
+    <div class="footer-pills">
+      <span class="pill" style="background:#fde8f5;color:#a21caf;">10 tools ready</span>
+      <span class="pill" style="background:#ede8fd;color:#7c3aed;">pastel edition</span>
+      <span class="pill" style="background:#fce7f3;color:#be185d;">click to launch</span>
+    </div>
+    <p class="footer-note">✦ all tools unlocked ✦</p>
+  </footer>
+
+  <script>
+    const tools = [
+      { name: "LS Data Formatter",      desc: "Format raw to LS data",     url: "https://amusearafat0.github.io/original-data-to-ls-data",        icon: "ti-table",                hue: "#f3d6f9", accent: "#b832c8", dot: "#e879f9" },
+      { name: "Zoom Attendee Sorting",  desc: "Sort & organize attendees",  url: "https://zoom-attendee-sorting.vercel.app/",                      icon: "ti-users-group",           hue: "#dde8fd", accent: "#3b5cf6", dot: "#818cf8" },
+      { name: "Refund Analysis",        desc: "Analyze chatlogs & refunds", url: "https://amitkarmakar-be10x.github.io/chatlog/",                  icon: "ti-receipt-refund",        hue: "#fde8ee", accent: "#db2777", dot: "#f472b6" },
+      { name: "YTJ File Maker",         desc: "Analyze & build YTJ files",  url: "https://arghya-007-afk.github.io/YTJ-Analyzer/",                 icon: "ti-brand-youtube",         hue: "#fde8d8", accent: "#ea580c", dot: "#fb923c" },
+      { name: "MAIN DATA Maker",        desc: "Split & build batch data",   url: "https://amusearafat0.github.io/batch-splitter/",                  icon: "ti-database",              hue: "#d8fbe8", accent: "#16a34a", dot: "#4ade80" },
+      { name: "Save Chat Analyzer",     desc: "Analyze saved chats",        url: "https://arghya-007-afk.github.io/savechat-Analyzer-Pro/",        icon: "ti-message-circle-2",      hue: "#eadcfd", accent: "#7c3aed", dot: "#a78bfa" },
+      { name: "Exotic Data Sorting",    desc: "Sort EM data precisely",     url: "https://amitkarmakar-be10x.github.io/EM-Data-Sort/",             icon: "ti-arrow-autofit-height",  hue: "#fdf3d8", accent: "#ca8a04", dot: "#fbbf24" },
+      { name: "Custom Zoom Payment",    desc: "Generate payment links",     url: "https://amusearafat0.github.io/custom-payment-link-generator/",  icon: "ti-link",                  hue: "#d8f5fd", accent: "#0891b2", dot: "#38bdf8" },
+      { name: "Transcript Summarizer",  desc: "Summarize workshops",        url: "https://amusearafat0.github.io/workshop-summarizer/",            icon: "ti-file-text",             hue: "#f0d8fd", accent: "#a21caf", dot: "#e879f9" },
+      { name: "Certificate Generator",  desc: "Generate certificates",      url: "https://amusearafat0.github.io/Certificate-Generator/",         icon: "ti-award",                 hue: "#fdecd8", accent: "#c2410c", dot: "#f97316" },
+    ];
+
+    const grid = document.getElementById('toolsGrid');
+
+    tools.forEach(t => {
+      const a = document.createElement('a');
+      a.href = t.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.className = 'tool-card';
+      a.setAttribute('aria-label', t.name);
+      a.innerHTML = `
+        <div class="card-sparkle" style="color:${t.dot};">✦</div>
+        <div class="card-icon-wrap" style="background:${t.hue};color:${t.accent};">
+          <i class="ti ${t.icon}" aria-hidden="true"></i>
+        </div>
+        <div class="card-name">${t.name}</div>
+        <div class="card-desc">${t.desc}</div>
+        <div class="card-badge" style="background:${t.hue};color:${t.accent};">Open ✦</div>
+        <div class="dots-deco">
+          <div class="dot" style="background:${t.dot};"></div>
+          <div class="dot" style="background:${t.dot};"></div>
+          <div class="dot" style="background:${t.dot};"></div>
+        </div>
+      `;
+      const blob = document.createElement('div');
+      blob.style.cssText = `position:absolute;top:-60%;right:-30%;width:120px;height:120px;border-radius:50%;background:${t.accent};opacity:0.06;pointer-events:none;transition:opacity 0.3s,transform 0.4s;`;
+      a.appendChild(blob);
+      a.addEventListener('mouseenter', () => { blob.style.opacity = '0.13'; blob.style.transform = 'scale(1.3)'; });
+      a.addEventListener('mouseleave', () => { blob.style.opacity = '0.06'; blob.style.transform = ''; });
+      grid.appendChild(a);
+    });
+
+    const bgEl = document.getElementById('mgBg');
+    const pastelColors = ['#f9c6e8','#d8b4fe','#fca5d2','#a5b4fc','#fbcfe8','#e9d5ff','#fde68a'];
+
+    for (let i = 0; i < 20; i++) {
+      const b = document.createElement('div');
+      b.className = 'bubble';
+      const sz = Math.random() * 16 + 8;
+      b.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;background:${pastelColors[Math.floor(Math.random()*pastelColors.length)]};animation-duration:${Math.random()*7+7}s;animation-delay:${Math.random()*10}s;bottom:0;`;
+      bgEl.appendChild(b);
+    }
+
+    const sparkleSymbols = ['✦','✧','✿','❀','★','✨'];
+    for (let i = 0; i < 22; i++) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.textContent = sparkleSymbols[Math.floor(Math.random()*sparkleSymbols.length)];
+      s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;color:${pastelColors[Math.floor(Math.random()*pastelColors.length)]};animation-duration:${Math.random()*2+2}s;animation-delay:${Math.random()*4}s;`;
+      bgEl.appendChild(s);
+    }
+
+    const heartsEl = document.getElementById('hearts');
+    for (let i = 0; i < 16; i++) {
+      const h = document.createElement('div');
+      h.className = 'fheart';
+      h.textContent = ['♥','♡'][Math.floor(Math.random()*2)];
+      h.style.cssText = `left:${Math.random()*100}%;top:${40+Math.random()*55}%;color:${['#f9a8d4','#d8b4fe','#fca5d2'][Math.floor(Math.random()*3)]};animation-duration:${Math.random()*3+3}s;animation-delay:${Math.random()*8}s;`;
+      heartsEl.appendChild(h);
+    }
+  </script>
+</body>
+</html>
