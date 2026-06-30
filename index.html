@@ -183,19 +183,19 @@
       flex-direction: column;
       gap: 10px;
       padding: 0 1.5rem;
-      max-width: 640px;
+      max-width: 920px;
       margin: 0 auto;
     }
 
     .tool-card {
       position: relative;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 14px;
       background: #fff;
       border-left: 4px solid var(--accent, #b832c8);
       border-radius: 14px;
-      padding: 0.85rem 1rem 0.85rem 0.9rem;
+      padding: 1rem 1.1rem 1rem 1rem;
       cursor: pointer;
       overflow: hidden;
       text-decoration: none;
@@ -262,6 +262,7 @@
       flex-shrink: 0;
       position: relative;
       z-index: 2;
+      margin-top: 2px;
       transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
     }
 
@@ -277,23 +278,20 @@
     }
 
     .card-name {
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 800;
       color: #6b21a8;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
       line-height: 1.3;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
     }
 
     .card-desc {
-      font-size: 11.5px;
+      font-size: 12px;
       color: #b094c4;
       font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      line-height: 1.45;
     }
 
     .card-badge {
@@ -301,6 +299,7 @@
       flex-shrink: 0;
       position: relative;
       z-index: 2;
+      margin-top: 6px;
       color: var(--accent, #b832c8);
       transition: transform 0.25s;
     }
@@ -340,7 +339,7 @@
 
     @media (max-width: 480px) {
       .mg-title { font-size: 1.7rem; }
-      .tools-grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 1rem; }
+      .tools-grid { padding: 0 1rem; }
     }
 
     #lockScreen {
@@ -478,22 +477,22 @@
 
   <script>
     const tools = [
-      { name: "LS Data Formatter",      desc: "Format raw to LS data",     url: "https://amusearafat0.github.io/original-data-to-ls-data",        icon: "ti-table",                hue: "#f3d6f9", accent: "#b832c8", dot: "#e879f9" },
-      { name: "Zoom Attendee Sorting",  desc: "Sort & organize attendees",  url: "https://zoom-attendee-sorting.vercel.app/",                      icon: "ti-users-group",           hue: "#dde8fd", accent: "#3b5cf6", dot: "#818cf8" },
-      { name: "Refund Analysis",        desc: "Analyze chatlogs & refunds", url: "https://amitkarmakar-be10x.github.io/chatlog/",                  icon: "ti-receipt-refund",        hue: "#fde8ee", accent: "#db2777", dot: "#f472b6" },
-      { name: "YTJ File Maker",         desc: "Analyze & build YTJ files",  url: "https://arghya-007-afk.github.io/YTJ-Analyzer/",                 icon: "ti-brand-youtube",         hue: "#fde8d8", accent: "#ea580c", dot: "#fb923c" },
-      { name: "Main Data Maker",         desc: "Split & build batch data",   url: "https://amusearafat0.github.io/batch-splitter/",                  icon: "ti-database",              hue: "#d8fbe8", accent: "#16a34a", dot: "#4ade80" },
-      { name: "Save Chat Analyzer",     desc: "Analyze saved chats",        url: "https://arghya-007-afk.github.io/savechat-Analyzer-Pro/",        icon: "ti-message-circle-2",      hue: "#eadcfd", accent: "#7c3aed", dot: "#a78bfa" },
-      { name: "Exotic Data Sorting",    desc: "Sort EM data precisely",     url: "https://amitkarmakar-be10x.github.io/EM-Data-Sort/",             icon: "ti-arrow-autofit-height",  hue: "#fdf3d8", accent: "#ca8a04", dot: "#fbbf24" },
-      { name: "Custom Zoom Payment",    desc: "Generate payment links",     url: "https://amusearafat0.github.io/custom-payment-link-generator/",  icon: "ti-link",                  hue: "#d8f5fd", accent: "#0891b2", dot: "#38bdf8" },
-      { name: "Transcript Summarizer",  desc: "Summarize workshops",        url: "https://amusearafat0.github.io/workshop-summarizer/",            icon: "ti-file-text",             hue: "#f0d8fd", accent: "#a21caf", dot: "#e879f9" },
-      { name: "Certificate Generator",  desc: "Generate certificates",      url: "https://amusearafat0.github.io/Certificate-Generator/",         icon: "ti-award",                 hue: "#fdecd8", accent: "#c2410c", dot: "#f97316" },
-      { name: "Prefilled Query Form",   desc: "Generate prefilled forms",   url: "https://amitkarmakar-be10x.github.io/prefilled-query-from/",    icon: "ti-clipboard-text",        hue: "#dcfce7", accent: "#15803d", dot: "#4ade80" },
-      { name: "CSV Splitter",           desc: "Split large CSV files",      url: "https://amitkarmakar-be10x.github.io/csv-spliter/",              icon: "ti-cut",                   hue: "#fee2e2", accent: "#b91c1c", dot: "#f87171" },
-      { name: "Sat 9:30 Zoom Link",     desc: "Create Saturday zoom links", url: "https://amitkarmakar-be10x.github.io/zoom-link-creator-930/",   icon: "ti-clock",                 hue: "#e0f2fe", accent: "#0369a1", dot: "#38bdf8" },
-      { name: "Exotic Data Maker",      desc: "Refine exotic lead data",    url: "https://arghya-007-afk.github.io/Exotic-Lead-Refinery/",        icon: "ti-flask",                 hue: "#fae8ff", accent: "#a21caf", dot: "#e879f9" },
-      { name: "Sales Data File Maker",  desc: "Build sales data files",     url: "https://arghya-007-afk.github.io/Be10X-Sales-Data-File-Maker/", icon: "ti-chart-bar",             hue: "#fef3c7", accent: "#b45309", dot: "#fbbf24" },
-      { name: "Be10x Landing Page",     desc: "Visit the landing page",     url: "https://be-10x.netlify.app/",                                     icon: "ti-rocket",                hue: "#ede9fe", accent: "#6d28d9", dot: "#a78bfa" },
+      { name: "LS Data Formatter",      desc: "Merges multiple Zoom export CSVs, converts them into Exotel-ready calling format, removes duplicate numbers, and auto-splits into 20,000-row files",     url: "https://amusearafat0.github.io/original-data-to-ls-data",        icon: "ti-table",                hue: "#f3d6f9", accent: "#b832c8", dot: "#e879f9" },
+      { name: "Zoom Attendee Sorting",  desc: "Cleans raw Zoom attendee reports — combines rejoins into one accurate watch time, removes duplicates, and tidies phone numbers to 10 digits",  url: "https://zoom-attendee-sorting.vercel.app/",                      icon: "ti-users-group",           hue: "#dde8fd", accent: "#3b5cf6", dot: "#818cf8" },
+      { name: "Refund Analysis",        desc: "Reads through workshop chat transcripts and analyzes attendee sentiment to help spot complaints or refund-risk conversations", url: "https://amitkarmakar-be10x.github.io/chatlog/",                  icon: "ti-receipt-refund",        hue: "#fde8ee", accent: "#db2777", dot: "#f472b6" },
+      { name: "YTJ File Maker",         desc: "Compares the Zoom attendance list against the registration list to generate a report of everyone who registered but never joined",  url: "https://arghya-007-afk.github.io/YTJ-Analyzer/",                 icon: "ti-brand-youtube",         hue: "#fde8d8", accent: "#ea580c", dot: "#fb923c" },
+      { name: "Main Data Maker",         desc: "Matches payment records against batch time-ranges for each product and splits them into separate, ready-to-download files per batch",   url: "https://amusearafat0.github.io/batch-splitter/",                  icon: "ti-database",              hue: "#d8fbe8", accent: "#16a34a", dot: "#4ade80" },
+      { name: "Save Chat Analyzer",     desc: "Reads Zoom Save Chat exports to detect spam, flag customer complaints, track handler replies, and check mandatory message compliance",        url: "https://arghya-007-afk.github.io/savechat-Analyzer-Pro/",        icon: "ti-message-circle-2",      hue: "#eadcfd", accent: "#7c3aed", dot: "#a78bfa" },
+      { name: "Exotic Data Sorting",    desc: "Cleans raw lead exports by splitting phone numbers into country codes, converting timestamps to IST, mapping platforms, and removing duplicates",     url: "https://amitkarmakar-be10x.github.io/EM-Data-Sort/",             icon: "ti-arrow-autofit-height",  hue: "#fdf3d8", accent: "#ca8a04", dot: "#fbbf24" },
+      { name: "Custom Zoom Payment",    desc: "Takes a registration list and two payment links, then creates a personalized payment link for every registrant with their name pre-filled",     url: "https://amusearafat0.github.io/custom-payment-link-generator/",  icon: "ti-link",                  hue: "#d8f5fd", accent: "#0891b2", dot: "#38bdf8" },
+      { name: "Transcript Summarizer",  desc: "Uses AI (Gemini, Claude, or Groq) to read workshop transcripts and produce a clear, timestamped summary report of what was covered",        url: "https://amusearafat0.github.io/workshop-summarizer/",            icon: "ti-file-text",             hue: "#f0d8fd", accent: "#a21caf", dot: "#e879f9" },
+      { name: "Certificate Generator",  desc: "Lets you pick a session/batch and generates the correctly formatted certificate data file for sending out to participants",      url: "https://amusearafat0.github.io/Certificate-Generator/",         icon: "ti-award",                 hue: "#fdecd8", accent: "#c2410c", dot: "#f97316" },
+      { name: "Prefilled Query Form",   desc: "Converts a Zoom registration export into a WATI-ready CSV with a personalized, pre-filled Google Form link for every contact",   url: "https://amitkarmakar-be10x.github.io/prefilled-query-from/",    icon: "ti-clipboard-text",        hue: "#dcfce7", accent: "#15803d", dot: "#4ade80" },
+      { name: "CSV Splitter",           desc: "Splits a large CSV into smaller chunks under your chosen size limit, packaging the output as a downloadable ZIP",      url: "https://amitkarmakar-be10x.github.io/csv-spliter/",              icon: "ti-cut",                   hue: "#fee2e2", accent: "#b91c1c", dot: "#f87171" },
+      { name: "Sat 9:30 Zoom Link",     desc: "Combines multiple CSVs into one, injects app download links (Android/iOS/Windows/Mac) into every row, then splits into <2MB files", url: "https://amitkarmakar-be10x.github.io/zoom-link-creator-930/",   icon: "ti-clock",                 hue: "#e0f2fe", accent: "#0369a1", dot: "#38bdf8" },
+      { name: "Exotic Data Maker",      desc: "Cleans raw lead exports by splitting phone numbers into country codes, converting timestamps to IST, mapping platforms, and removing duplicates",    url: "https://arghya-007-afk.github.io/Exotic-Lead-Refinery/",        icon: "ti-flask",                 hue: "#fae8ff", accent: "#a21caf", dot: "#e879f9" },
+      { name: "Sales Data File Maker",  desc: "Builds organized sales data files from raw input for the team — link couldn't be verified, may need an update",     url: "https://arghya-007-afk.github.io/Be10X-Sales-Data-File-Maker/", icon: "ti-chart-bar",             hue: "#fef3c7", accent: "#b45309", dot: "#fbbf24" },
+      { name: "Be10x Landing Page",     desc: "Simple holding page shown to attendees while they wait for the live session joining link to be shared",     url: "https://be-10x.netlify.app/",                                     icon: "ti-rocket",                hue: "#ede9fe", accent: "#6d28d9", dot: "#a78bfa" },
     ];
 
     const grid = document.getElementById('toolsGrid');
