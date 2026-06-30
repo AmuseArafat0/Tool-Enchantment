@@ -211,6 +211,13 @@
     .tool-card:nth-child(8)  { animation-delay: 0.40s; }
     .tool-card:nth-child(9)  { animation-delay: 0.45s; }
     .tool-card:nth-child(10) { animation-delay: 0.50s; }
+    .tool-card:nth-child(11) { animation-delay: 0.55s; }
+    .tool-card:nth-child(12) { animation-delay: 0.60s; }
+    .tool-card:nth-child(13) { animation-delay: 0.65s; }
+    .tool-card:nth-child(14) { animation-delay: 0.70s; }
+    .tool-card:nth-child(15) { animation-delay: 0.75s; }
+    .tool-card:nth-child(16) { animation-delay: 0.80s; }
+    .tool-card:nth-child(17) { animation-delay: 0.85s; }
 
     @keyframes cardFloatIn {
       from { transform: translateY(24px) scale(0.92); opacity: 0; }
@@ -343,9 +350,103 @@
       .mg-title { font-size: 1.7rem; }
       .tools-grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 1rem; }
     }
+
+    #lockScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: linear-gradient(135deg, #fdf6ff, #f3e8ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .lock-card {
+      background: #fff;
+      border: 1.5px solid rgba(220,170,240,0.5);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(180,110,210,0.18);
+    }
+
+    .lock-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+    .lock-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #6b21a8;
+      margin-bottom: 0.4rem;
+    }
+
+    .lock-sub {
+      font-size: 12.5px;
+      color: #b094c4;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .lock-input {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border-radius: 14px;
+      border: 1.5px solid rgba(220,170,240,0.6);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      margin-bottom: 0.9rem;
+      color: #6b21a8;
+      font-weight: 700;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .lock-input:focus { border-color: #c026a8; }
+
+    .lock-btn {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #e879f9, #7c3aed);
+      color: #fff;
+      font-weight: 800;
+      font-size: 13.5px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .lock-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(124,58,237,0.3); }
+
+    .lock-error {
+      font-size: 12px;
+      color: #db2777;
+      font-weight: 700;
+      margin-top: 0.7rem;
+      min-height: 16px;
+    }
+
+    .app-content { display: none; }
   </style>
 </head>
 <body>
+
+  <div id="lockScreen">
+    <div class="lock-card">
+      <div class="lock-icon">🔒</div>
+      <div class="lock-title">Tool Enchantment</div>
+      <div class="lock-sub">Enter your password to continue</div>
+      <input type="password" id="lockInput" class="lock-input" placeholder="Password" autocomplete="off" />
+      <button class="lock-btn" id="lockBtn">Unlock ✦</button>
+      <div class="lock-error" id="lockError"></div>
+    </div>
+  </div>
+
+  <div class="app-content" id="appContent">
 
   <div id="mgBg"></div>
   <div class="floating-hearts" id="hearts"></div>
@@ -376,7 +477,7 @@
 
   <footer class="mg-footer">
     <div class="footer-pills">
-      <span class="pill" style="background:#fde8f5;color:#a21caf;">10 tools ready</span>
+      <span class="pill" style="background:#fde8f5;color:#a21caf;">17 tools ready</span>
       <span class="pill" style="background:#ede8fd;color:#7c3aed;">pastel edition</span>
       <span class="pill" style="background:#fce7f3;color:#be185d;">click to launch</span>
     </div>
@@ -395,6 +496,12 @@
       { name: "Custom Zoom Payment",    desc: "Generate payment links",     url: "https://amusearafat0.github.io/custom-payment-link-generator/",  icon: "ti-link",                  hue: "#d8f5fd", accent: "#0891b2", dot: "#38bdf8" },
       { name: "Transcript Summarizer",  desc: "Summarize workshops",        url: "https://amusearafat0.github.io/workshop-summarizer/",            icon: "ti-file-text",             hue: "#f0d8fd", accent: "#a21caf", dot: "#e879f9" },
       { name: "Certificate Generator",  desc: "Generate certificates",      url: "https://amusearafat0.github.io/Certificate-Generator/",         icon: "ti-award",                 hue: "#fdecd8", accent: "#c2410c", dot: "#f97316" },
+      { name: "Prefilled Query Form",   desc: "Generate prefilled forms",   url: "https://amitkarmakar-be10x.github.io/prefilled-query-from/",    icon: "ti-clipboard-text",        hue: "#dcfce7", accent: "#15803d", dot: "#4ade80" },
+      { name: "CSV Splitter",           desc: "Split large CSV files",      url: "https://amitkarmakar-be10x.github.io/csv-spliter/",              icon: "ti-cut",                   hue: "#fee2e2", accent: "#b91c1c", dot: "#f87171" },
+      { name: "Sat 9:30 Zoom Link",     desc: "Create Saturday zoom links", url: "https://amitkarmakar-be10x.github.io/zoom-link-creator-930/",   icon: "ti-clock",                 hue: "#e0f2fe", accent: "#0369a1", dot: "#38bdf8" },
+      { name: "Exotic Data Maker",      desc: "Refine exotic lead data",    url: "https://arghya-007-afk.github.io/Exotic-Lead-Refinery/",        icon: "ti-flask",                 hue: "#fae8ff", accent: "#a21caf", dot: "#e879f9" },
+      { name: "Sales Data File Maker",  desc: "Build sales data files",     url: "https://arghya-007-afk.github.io/Be10X-Sales-Data-File-Maker/", icon: "ti-chart-bar",             hue: "#fef3c7", accent: "#b45309", dot: "#fbbf24" },
+      { name: "Be10x Landing Page",     desc: "Visit the landing page",     url: "https://be-10x.netlify.app/",                                     icon: "ti-rocket",                hue: "#ede9fe", accent: "#6d28d9", dot: "#a78bfa" },
     ];
 
     const grid = document.getElementById('toolsGrid');
@@ -455,6 +562,58 @@
       h.textContent = ['♥','♡'][Math.floor(Math.random()*2)];
       h.style.cssText = `left:${Math.random()*100}%;top:${40+Math.random()*55}%;color:${['#f9a8d4','#d8b4fe','#fca5d2'][Math.floor(Math.random()*3)]};animation-duration:${Math.random()*3+3}s;animation-delay:${Math.random()*8}s;`;
       heartsEl.appendChild(h);
+    }
+  </script>
+
+  </div>
+
+  <script>
+    const PASS_LIMITED = "Titanic12#";
+    const PASS_FULL = "123#Titanic12#";
+    const LIMITED_COUNT = 6;
+
+    const lockScreen = document.getElementById('lockScreen');
+    const appContent = document.getElementById('appContent');
+    const lockInput = document.getElementById('lockInput');
+    const lockBtn = document.getElementById('lockBtn');
+    const lockError = document.getElementById('lockError');
+
+    function applyAccess(level) {
+      lockScreen.style.display = 'none';
+      appContent.style.display = 'block';
+      if (level === 'limited') {
+        const cards = document.querySelectorAll('.tool-card');
+        cards.forEach((card, i) => {
+          if (i >= LIMITED_COUNT) card.style.display = 'none';
+        });
+        const pill = document.querySelector('.footer-pills .pill');
+        if (pill) pill.textContent = LIMITED_COUNT + " tools ready";
+      }
+    }
+
+    function tryUnlock() {
+      const val = lockInput.value;
+      if (val === PASS_FULL) {
+        sessionStorage.setItem('toolAccess', 'full');
+        applyAccess('full');
+      } else if (val === PASS_LIMITED) {
+        sessionStorage.setItem('toolAccess', 'limited');
+        applyAccess('limited');
+      } else {
+        lockError.textContent = "Incorrect password, try again ✦";
+        lockInput.value = '';
+        lockInput.focus();
+      }
+    }
+
+    lockBtn.addEventListener('click', tryUnlock);
+    lockInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryUnlock(); });
+
+    const existingAccess = sessionStorage.getItem('toolAccess');
+    if (existingAccess === 'full' || existingAccess === 'limited') {
+      applyAccess(existingAccess);
+    } else {
+      lockInput.focus();
     }
   </script>
 </body>
