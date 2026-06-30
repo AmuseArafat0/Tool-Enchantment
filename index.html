@@ -594,10 +594,8 @@
     function tryUnlock() {
       const val = lockInput.value;
       if (val === PASS_FULL) {
-        sessionStorage.setItem('toolAccess', 'full');
         applyAccess('full');
       } else if (val === PASS_LIMITED) {
-        sessionStorage.setItem('toolAccess', 'limited');
         applyAccess('limited');
       } else {
         lockError.textContent = "Incorrect password, try again ✦";
@@ -609,12 +607,7 @@
     lockBtn.addEventListener('click', tryUnlock);
     lockInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryUnlock(); });
 
-    const existingAccess = sessionStorage.getItem('toolAccess');
-    if (existingAccess === 'full' || existingAccess === 'limited') {
-      applyAccess(existingAccess);
-    } else {
-      lockInput.focus();
-    }
+    lockInput.focus();
   </script>
 </body>
 </html>
